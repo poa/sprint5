@@ -15,8 +15,8 @@ from data_tests import TestData as TD
     [
         pytest.param(TD.CONSTR_PATH, L.LOGIN_BUTTON, id="from main page"),
         pytest.param(TD.ACCOUNT_PATH, L.LOGIN_BUTTON, id="from account page"),
+        pytest.param(TD.REG_PATH, L.LOGIN_LINK, id="from registration page"),
         pytest.param(TD.RECOVERY_PATH, L.LOGIN_LINK, id="from recovery page"),
-        pytest.param(TD.REG_PATH, L.LOGIN_LINK, id="from registration page")
     ],
 )
 def test_login(driver, location, control):

@@ -23,13 +23,10 @@ class Locators:
     NAME_INPUT = "//label[text()='Имя']/../input"           # Input field for Name
     PASSWD_INPUT = "//label[text()='Пароль']/../input"      # Input field for Password
 
+    FILLING_TAB = "//span[text()='Начинки']/.."             # Constructor tab with filling
     LOAVES_TAB = "//span[text()='Булки']/.."                # Constructor tab with loaves
     SAUCES_TAB = "//span[text()='Соусы']/.."                # Constructor tab with sauces
-    FILLING_TAB = "//span[text()='Начинки']/.."             # Constructor tab with filling
 
-    # Ошибка: Пользователь не существует
-    EXISTING_USER_ERROR = "//p[text()='Такой пользователь уже существует']"
-
-    # Ошибка: Некорректный пароль
-    SHORT_PASSWORD_ERROR = "//p[text()='Некорректный пароль']"
+    EXISTING_USER_ERROR = "//p[text()='Такой пользователь уже существует']" # Ошибка: Пользователь не существует
+    SHORT_PASSWORD_ERROR = "//p[text()='Некорректный пароль']"              # Ошибка: Некорректный пароль
     # fmt: on
