@@ -12,5 +12,10 @@ class Locators:
     NAME_INPUT = "//label[text()='Имя']/../input"           # Input field for Name
     EMAIL_INPUT = "//label[text()='Email']/../input"        # Input field for Email
     PASSWD_INPUT = "//label[text()='Пароль']/../input"      # Input field for Password
+
+    # Ошибка: Пользователь не существует
     EXISTING_USER_ERROR = "//p[text()='Такой пользователь уже существует']"
+
+    # Ошибка: Некорректный пароль
+    SHORT_PASSWORD_ERROR = "//p[text()='Некорректный пароль']"
     # fmt: on

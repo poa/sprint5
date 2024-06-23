@@ -1,3 +1,7 @@
-pytest~=8.2.1
+pytest
 
-selenium~=4.21.0
+pytest-dependency
+
+selenium
+
+Faker

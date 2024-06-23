@@ -9,7 +9,7 @@ from data_locators import Locators as L
 @pytest.fixture
 def driver():
     opts = webdriver.ChromeOptions()
-    # opts.add_argument("--headless")
+    opts.add_argument("--headless")
     driver = webdriver.Chrome(options=opts)
     driver.get(TD.APP_URL)
     yield driver

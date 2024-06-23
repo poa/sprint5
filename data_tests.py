@@ -2,7 +2,7 @@
 
 
 class TestData:
-    APP_URL = "https://stellarburgers.nomoreparties.site/"
+    APP_URL = "https://stellarburgers.nomoreparties.site"
 
     USER_NAME = "Тест Тестович Тестилов"
     USER_EMAIL = "opeshko-10-123@ya.ru"
