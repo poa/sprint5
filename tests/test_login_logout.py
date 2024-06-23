@@ -33,11 +33,15 @@ def test_login(driver, location, control):
 
 
 @pytest.mark.dependency(dependent=["test_login"])
-def test_logout(driver_logged):
-    driver_logged.find_element(By.XPATH, L.ACCOUNT_LINK).click()
-    Wait(driver_logged, 3).until(EC.visibility_of_element_located((By.XPATH, L.LOGOUT_BUTTON)))
-    driver_logged.find_element(By.XPATH, L.LOGOUT_BUTTON).click()
-    element = Wait(driver_logged, 3).until(
+def test_logout(driver):
+    driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+    driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
+    driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
+    driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+    driver.find_element(By.XPATH, L.ACCOUNT_LINK).click()
+    Wait(driver, 3).until(EC.visibility_of_element_located((By.XPATH, L.LOGOUT_BUTTON)))
+    driver.find_element(By.XPATH, L.LOGOUT_BUTTON).click()
+    element = Wait(driver, 3).until(
         EC.visibility_of_element_located((By.XPATH, L.LOGIN_BUTTON))
     )
 

@@ -14,7 +14,8 @@ class Locators:
 
     ACCOUNT_LINK = f"//a[@href='{TD.ACCOUNT_PATH}']"        # Account link
     CONSTR_LINK = f"//a[@href='{TD.CONSTR_PATH}']"          # Constructor link (main page)
-    LOGIN_LINK = f"//a[@href = '{TD.LOGIN_PATH}']"          # Login link
+    LOGIN_LINK = f"//a[@href='{TD.LOGIN_PATH}']"            # Login link
+    LOGO_LINK = f"//div[starts-with(@class,'AppHeader_header__logo')]/a" # Logo link
     RECOVERY_LINK = f"//a[@href='{TD.RECOVERY_PATH}']"      # Password recovery link
     REG_LINK = f"//a[@href = '{TD.REG_PATH}']"              # Registration link
 
