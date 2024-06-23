@@ -5,16 +5,18 @@ from selenium.webdriver.common.by import By
 from data_tests import TestData as TD
 from data_locators import Locators as L
 
-
 @pytest.fixture
-def driver():
+def driver(request):
     opts = webdriver.ChromeOptions()
-    opts.add_argument("--headless")
+    # opts.add_argument("--headless")
     driver = webdriver.Chrome(options=opts)
     driver.get(TD.APP_URL)
-    yield driver
-    driver.quit()
 
+    def close_driver():
+        driver.quit()
+
+    request.addfinalizer(close_driver())
+    return driver
 
 @pytest.fixture
 def driver_reg_form(driver):
