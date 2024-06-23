@@ -21,46 +21,24 @@ def test_registration_open_reg_form(driver):
 
 
 @pytest.mark.dependency(depends=["test_registration_open_reg_form"])
-def test_registration_successful_registration_correct_inputs(driver_reg_form):
-    name = gen_name()
-    email = gen_email()
-    passwd = gen_passwd()
-
-    driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(name)
-    driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(email)
-    driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(passwd)
-    driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
-    Wait(driver_reg_form, 3).until(EC.url_changes(driver_reg_form.current_url))
-
-    assert driver_reg_form.current_url.endswith(TD.LOGIN_PATH)
-
-
-@pytest.mark.dependency(depends=["test_registration_open_reg_form"])
-def test_registration_bad_password_short(driver_reg_form):
-    name = gen_name()
-    email = gen_email()
-    passwd = "short"
-
+@pytest.mark.parametrize(
+    "name, email, passwd, expected",
+    [
+        # fmt: off
+        pytest.param(gen_name(), gen_email(), gen_passwd(), L.LOGIN_BUTTON, id="successful_registration_correct_inputs"),
+        pytest.param(gen_name(), gen_email(), "short", L.SHORT_PASSWORD_ERROR, id="bad_password_short"),
+        pytest.param(TD.USER_NAME, TD.USER_EMAIL, TD.USER_PASSWD, L.EXISTING_USER_ERROR, id="error_existing_user"),
+        # fmt: on
+    ],
+)
+def test_registration(driver_reg_form, name, email, passwd, expected):
     driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(name)
     driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(email)
     driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(passwd)
     driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
     element = Wait(driver_reg_form, 3).until(
-        EC.presence_of_element_located((By.XPATH, L.SHORT_PASSWORD_ERROR))
+        EC.visibility_of_element_located((By.XPATH, expected))
     )
 
     assert element is not None
 
-
-@pytest.mark.dependency(depends=["test_registration_open_reg_form"])
-def test_registration_error_existing_user(driver_reg_form):
-
-    driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(TD.USER_NAME)
-    driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
-    driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
-    driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
-
-    element = Wait(driver_reg_form, 2).until(
-        EC.presence_of_element_located((By.XPATH, L.EXISTING_USER_ERROR))
-    )
-    assert element is not None
