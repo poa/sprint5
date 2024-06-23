@@ -1,4 +1,4 @@
-# Tests for registration functionality
+# Tests for navigation functionality
 
 import pytest
 from selenium.webdriver.common.by import By
