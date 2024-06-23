@@ -5,7 +5,9 @@ from data_tests import TestData as TD
 
 class Locators:
     # fmt: off
+
     LOGIN_BUTTON = "//button[starts-with(text(),'Войти')]"  # Login button
+    LOGOUT_BUTTON = "//button[text()='Выход']"              # Logout button
     ORDER_BUTTON = "//button[text()='Оформить заказ']"      # Order button
     RECOVERY_BUTTON = "//button[text()='Восстановить']"     # Registration button
     REG_BUTTON = "//button[text()='Зарегистрироваться']"    # Registration button
