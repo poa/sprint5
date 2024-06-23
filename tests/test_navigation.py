@@ -25,6 +25,7 @@ def test_navigation(driver, location: str, control, destination):
     driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
     driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
     driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+    Wait(driver, 3).until(EC.visibility_of_element_located((By.XPATH, L.ORDER_BUTTON)))
     driver.get(TD.APP_URL + location)
     driver.find_element(By.XPATH, control).click()
     Wait(driver, 3).until(EC.url_changes(location))
