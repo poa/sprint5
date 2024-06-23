@@ -8,5 +8,8 @@ class TestData:
     USER_EMAIL = "opeshko-10-123@ya.ru"
     USER_PASSWD = "P@ssw0rd"
 
+    ACCOUNT_PATH = "/account"
+    CONSTR_PATH = "/"
     LOGIN_PATH = "/login"
+    RECOVERY_PATH = "/forgot-password"
     REG_PATH = "/register"
