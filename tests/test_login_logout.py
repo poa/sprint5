@@ -10,6 +10,13 @@ from data_tests import TestData as TD
 
 
 class TestLoginLogout:
+    @staticmethod
+    def login(driver):
+        driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
+        driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
+        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+        return
+
     @pytest.mark.dependency(name="successful_login")
     @pytest.mark.parametrize(
         "location, control",
@@ -23,9 +30,7 @@ class TestLoginLogout:
     def test_login(self, driver, location, control):
         driver.get(TD.APP_URL + location)
         driver.find_element(By.XPATH, control).click()
-        driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
-        driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
-        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+        self.login(driver)
         element = Wait(driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, L.ORDER_BUTTON))
         )
@@ -35,13 +40,9 @@ class TestLoginLogout:
     @pytest.mark.dependency(depends=["successful_login"])
     def test_logout(self, driver):
         driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-        driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
-        driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
-        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+        self.login(driver)
         driver.find_element(By.XPATH, L.ACCOUNT_LINK).click()
-        Wait(driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, L.LOGOUT_BUTTON))
-        )
+        Wait(driver, 3).until(EC.visibility_of_element_located((By.XPATH, L.LOGOUT_BUTTON)))
         driver.find_element(By.XPATH, L.LOGOUT_BUTTON).click()
         element = Wait(driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, L.LOGIN_BUTTON))
