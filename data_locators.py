@@ -23,6 +23,7 @@ class Locators:
     NAME_INPUT = "//label[text()='Имя']/../input"           # Input field for Name
     PASSWD_INPUT = "//label[text()='Пароль']/../input"      # Input field for Password
 
+    CURRENT_TAB = "tab_type_current"                        # Current tab indication
     FILLING_TAB = "//span[text()='Начинки']/.."             # Constructor tab with filling
     LOAVES_TAB = "//span[text()='Булки']/.."                # Constructor tab with loaves
     SAUCES_TAB = "//span[text()='Соусы']/.."                # Constructor tab with sauces
