@@ -10,35 +10,34 @@ from data_tests import TestData as TD
 from tools import *
 
 
-@pytest.mark.dependency()
-def test_registration_open_reg_form(driver):
+class TestRegistration:
+    @pytest.mark.dependency(name="reg_form_is_available")
+    def test_registration_open_reg_form(self, driver):
 
-    driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-    driver.find_element(By.XPATH, L.REG_LINK).click()
-    Wait(driver, 3).until(EC.url_to_be(TD.APP_URL + TD.REG_PATH))
+        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
+        driver.find_element(By.XPATH, L.REG_LINK).click()
+        Wait(driver, 3).until(EC.url_to_be(TD.APP_URL + TD.REG_PATH))
 
-    assert driver.current_url.endswith(TD.REG_PATH)
+        assert driver.current_url.endswith(TD.REG_PATH)
 
-
-@pytest.mark.dependency(depends=["test_registration_open_reg_form"])
-@pytest.mark.parametrize(
-    "name, email, passwd, expected",
-    [
-        # fmt: off
-        pytest.param(gen_name(), gen_email(), gen_passwd(), L.LOGIN_BUTTON, id="successful_registration_correct_inputs"),
-        pytest.param(gen_name(), gen_email(), "short", L.SHORT_PASSWORD_ERROR, id="bad_password_short"),
-        pytest.param(TD.USER_NAME, TD.USER_EMAIL, TD.USER_PASSWD, L.EXISTING_USER_ERROR, id="error_existing_user"),
-        # fmt: on
-    ],
-)
-def test_registration(driver_reg_form, name, email, passwd, expected):
-    driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(name)
-    driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(email)
-    driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(passwd)
-    driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
-    element = Wait(driver_reg_form, 3).until(
-        EC.visibility_of_element_located((By.XPATH, expected))
+    @pytest.mark.dependency(depends=["reg_form_is_available"])
+    @pytest.mark.parametrize(
+        "name, email, passwd, expected",
+        [
+            # fmt: off
+            pytest.param(gen_name(), gen_email(), gen_passwd(), L.LOGIN_BUTTON, id="successful_registration_correct_inputs"),
+            pytest.param(gen_name(), gen_email(), "short", L.SHORT_PASSWORD_ERROR, id="bad_password_short"),
+            pytest.param(TD.USER_NAME, TD.USER_EMAIL, TD.USER_PASSWD, L.EXISTING_USER_ERROR, id="error_existing_user"),
+            # fmt: on
+        ],
     )
+    def test_registration(self, driver_reg_form, name, email, passwd, expected):
+        driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(name)
+        driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(email)
+        driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(passwd)
+        driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
+        element = Wait(driver_reg_form, 3).until(
+            EC.visibility_of_element_located((By.XPATH, expected))
+        )
 
-    assert element is not None
-
+        assert element is not None
