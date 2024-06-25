@@ -1,12 +1,9 @@
 # Tests for registration functionality
 
 import pytest
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait as Wait
 
-from data_locators import Locators as L
-from data_tests import TestData as TD
 from tools import *
 
 
@@ -14,8 +11,8 @@ class TestRegistration:
     @pytest.mark.dependency(name="reg_form_is_available")
     def test_registration_open_reg_form(self, driver):
 
-        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-        driver.find_element(By.XPATH, L.REG_LINK).click()
+        driver.find_element(*L.LOGIN_BUTTON).click()
+        driver.find_element(*L.REG_LINK).click()
         Wait(driver, 3).until(EC.url_to_be(TD.APP_URL + TD.REG_PATH))
 
         assert driver.current_url.endswith(TD.REG_PATH)
@@ -32,12 +29,12 @@ class TestRegistration:
         ],
     )
     def test_registration(self, driver_reg_form, name, email, passwd, expected):
-        driver_reg_form.find_element(By.XPATH, L.NAME_INPUT).send_keys(name)
-        driver_reg_form.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(email)
-        driver_reg_form.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(passwd)
-        driver_reg_form.find_element(By.XPATH, L.REG_BUTTON).click()
+        driver_reg_form.find_element(*L.NAME_INPUT).send_keys(name)
+        driver_reg_form.find_element(*L.EMAIL_INPUT).send_keys(email)
+        driver_reg_form.find_element(*L.PASSWD_INPUT).send_keys(passwd)
+        driver_reg_form.find_element(*L.REG_BUTTON).click()
         element = Wait(driver_reg_form, 3).until(
-            EC.visibility_of_element_located((By.XPATH, expected))
+            EC.visibility_of_element_located(expected)
         )
 
         assert element is not None

@@ -19,8 +19,8 @@ class TestConstructor:
     )
     def test_constructor_tabs(self, driver, current_tab, next_tab):
 
-        driver.find_element(By.XPATH, current_tab).click()
-        tab = driver.find_element(By.XPATH, next_tab)
+        driver.find_element(*current_tab).click()
+        tab = driver.find_element(*next_tab)
         tab.click()
 
         assert tab.get_attribute("class").find(L.CURRENT_TAB) > 0

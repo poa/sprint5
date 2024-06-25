@@ -18,6 +18,6 @@ def driver():
 
 @pytest.fixture
 def driver_reg_form(driver):
-    driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-    driver.find_element(By.XPATH, L.REG_LINK).click()
+    driver.find_element(*L.LOGIN_BUTTON).click()
+    driver.find_element(*L.REG_LINK).click()
     return driver
