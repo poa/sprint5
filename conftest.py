@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 
 from data_tests import TestData as TD
 from data_locators import Locators as L
+from tools import login, wait_for_element
 
 
 @pytest.fixture
@@ -18,6 +19,13 @@ def driver():
 
 @pytest.fixture
 def driver_reg_form(driver):
-    driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-    driver.find_element(By.XPATH, L.REG_LINK).click()
+    driver.find_element(*L.LOGIN_BUTTON).click()
+    driver.find_element(*L.REG_LINK).click()
+    return driver
+
+@pytest.fixture
+def driver_logged(driver):
+    driver.find_element(*L.LOGIN_BUTTON).click()
+    login(driver)
+    wait_for_element(driver, L.ORDER_BUTTON)
     return driver

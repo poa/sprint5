@@ -1,22 +1,13 @@
 # Tests for login/logout functionality
 
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait as Wait
 
 from data_locators import Locators as L
 from data_tests import TestData as TD
+from tools import login, wait_for_element
 
 
 class TestLoginLogout:
-    @staticmethod
-    def login(driver):
-        driver.find_element(By.XPATH, L.EMAIL_INPUT).send_keys(TD.USER_EMAIL)
-        driver.find_element(By.XPATH, L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
-        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-        return
-
     @pytest.mark.dependency(name="successful_login")
     @pytest.mark.parametrize(
         "location, control",
@@ -29,23 +20,17 @@ class TestLoginLogout:
     )
     def test_login(self, driver, location, control):
         driver.get(TD.APP_URL + location)
-        driver.find_element(By.XPATH, control).click()
-        self.login(driver)
-        element = Wait(driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, L.ORDER_BUTTON))
-        )
+        driver.find_element(*control).click()
+        login(driver)
+        element = wait_for_element(driver, L.ORDER_BUTTON)
 
         assert element is not None
 
     @pytest.mark.dependency(depends=["successful_login"])
-    def test_logout(self, driver):
-        driver.find_element(By.XPATH, L.LOGIN_BUTTON).click()
-        self.login(driver)
-        driver.find_element(By.XPATH, L.ACCOUNT_LINK).click()
-        Wait(driver, 3).until(EC.visibility_of_element_located((By.XPATH, L.LOGOUT_BUTTON)))
-        driver.find_element(By.XPATH, L.LOGOUT_BUTTON).click()
-        element = Wait(driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, L.LOGIN_BUTTON))
-        )
+    def test_logout(self, driver_logged):
+        driver_logged.find_element(*L.ACCOUNT_LINK).click()
+        wait_for_element(driver_logged, L.LOGOUT_BUTTON)
+        driver_logged.find_element(*L.LOGOUT_BUTTON).click()
+        element = wait_for_element(driver_logged, L.LOGIN_BUTTON)
 
         assert element is not None
