@@ -1,8 +1,6 @@
 # Tests for registration functionality
 
 import pytest
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait as Wait
 
 from tools import *
 

@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 
 from data_tests import TestData as TD
 from data_locators import Locators as L

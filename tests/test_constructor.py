@@ -1,7 +1,6 @@
 # Tests for constructor functionality
 
 import pytest
-from selenium.webdriver.common.by import By
 
 from data_locators import Locators as L
 
