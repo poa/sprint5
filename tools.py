@@ -1,5 +1,6 @@
 from faker import Faker
-from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait as Wait
 
 from data_locators import Locators as L
 from data_tests import TestData as TD
@@ -28,3 +29,8 @@ def login(driver):
     driver.find_element(*L.PASSWD_INPUT).send_keys(TD.USER_PASSWD)
     driver.find_element(*L.LOGIN_BUTTON).click()
     return
+
+
+def wait_for_element(driver, element):
+    result = Wait(driver, 5).until(EC.visibility_of_element_located(element))
+    return result

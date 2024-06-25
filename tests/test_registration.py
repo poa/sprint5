@@ -33,8 +33,6 @@ class TestRegistration:
         driver_reg_form.find_element(*L.EMAIL_INPUT).send_keys(email)
         driver_reg_form.find_element(*L.PASSWD_INPUT).send_keys(passwd)
         driver_reg_form.find_element(*L.REG_BUTTON).click()
-        element = Wait(driver_reg_form, 3).until(
-            EC.visibility_of_element_located(expected)
-        )
+        element = wait_for_element(driver_reg_form, expected)
 
         assert element is not None

@@ -1,13 +1,10 @@
 # Tests for login/logout functionality
 
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait as Wait
 
 from data_locators import Locators as L
 from data_tests import TestData as TD
-from tools import login
+from tools import login, wait_for_element
 
 
 class TestLoginLogout:
@@ -25,17 +22,15 @@ class TestLoginLogout:
         driver.get(TD.APP_URL + location)
         driver.find_element(*control).click()
         login(driver)
-        element = Wait(driver, 3).until(EC.visibility_of_element_located(L.ORDER_BUTTON))
+        element = wait_for_element(driver, L.ORDER_BUTTON)
 
         assert element is not None
 
     @pytest.mark.dependency(depends=["successful_login"])
-    def test_logout(self, driver):
-        driver.find_element(*L.LOGIN_BUTTON).click()
-        login(driver)
-        driver.find_element(*L.ACCOUNT_LINK).click()
-        Wait(driver, 3).until(EC.visibility_of_element_located(L.LOGOUT_BUTTON))
-        driver.find_element(*L.LOGOUT_BUTTON).click()
-        element = Wait(driver, 3).until(EC.visibility_of_element_located(L.LOGIN_BUTTON))
+    def test_logout(self, driver_logged):
+        driver_logged.find_element(*L.ACCOUNT_LINK).click()
+        wait_for_element(driver_logged, L.LOGOUT_BUTTON)
+        driver_logged.find_element(*L.LOGOUT_BUTTON).click()
+        element = wait_for_element(driver_logged, L.LOGIN_BUTTON)
 
         assert element is not None

@@ -1,13 +1,12 @@
 # Tests for navigation functionality
 
 import pytest
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait as Wait
 
 from data_locators import Locators as L
 from data_tests import TestData as TD
-from tools import login
+from tools import wait_for_element
 
 
 class TestNavigation:
@@ -22,12 +21,10 @@ class TestNavigation:
             # fmt: on
         ],
     )
-    def test_navigation(self, driver, location: str, control, destination):
-        driver.find_element(*L.LOGIN_BUTTON).click()
-        login(driver)
-        Wait(driver, 3).until(EC.visibility_of_element_located(L.ORDER_BUTTON))
-        driver.get(TD.APP_URL + location)
-        driver.find_element(*control).click()
-        Wait(driver, 3).until(EC.url_changes(location))
+    def test_navigation(self, driver_logged, location: str, control, destination):
+        wait_for_element(driver_logged, L.ORDER_BUTTON)
+        driver_logged.get(TD.APP_URL + location)
+        driver_logged.find_element(*control).click()
+        Wait(driver_logged, 3).until(EC.url_changes(location))
 
-        assert driver.current_url.startswith(TD.APP_URL + destination)
+        assert driver_logged.current_url.startswith(TD.APP_URL + destination)
