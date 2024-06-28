@@ -12,7 +12,7 @@ class TestConstructor:
             # fmt: off
             pytest.param(L.SAUCES_TAB, L.FILLING_TAB, id="switch from sauces to filling"),
             pytest.param(L.FILLING_TAB, L.SAUCES_TAB, id="switch from filling to sauces"),
-            pytest.param(L.FILLING_TAB, L.LOAVES_TAB, id="switch from filling to loaves"),
+            pytest.param(L.FILLING_TAB, L.BUNS_TAB, id="switch from filling to loaves"),
             # fmt: on
         ],
     )

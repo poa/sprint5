@@ -27,7 +27,7 @@ class Locators:
 
     CURRENT_TAB = "tab_type_current"                                    # Current tab indication
     FILLING_TAB = (By.XPATH, "//span[text()='Начинки']/..")             # Constructor tab with filling
-    LOAVES_TAB = (By.XPATH, "//span[text()='Булки']/..")                # Constructor tab with loaves
+    BUNS_TAB = (By.XPATH, "//span[text()='Булки']/..")                # Constructor tab with loaves
     SAUCES_TAB = (By.XPATH, "//span[text()='Соусы']/..")                # Constructor tab with sauces
 
     EXISTING_USER_ERROR = (By.XPATH, "//p[text()='Такой пользователь уже существует']") # Ошибка: Пользователь не существует
